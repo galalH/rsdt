@@ -6,10 +6,15 @@
 \alias{rsdt-package}
 \title{rsdt: What the Package Does (One Line, Title Case)}
 \description{
-What the package does (one paragraph).
+Tidy interface to the UNHCR RSD/RST Statistical Reports.
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
+\strong{Maintainer}: Hisham Galal \email{galal@unhcr.org}
+
+Other contributors:
+\itemize{
+  \item UNHCR [copyright holder]
+}
 
 }
 \keyword{internal}
