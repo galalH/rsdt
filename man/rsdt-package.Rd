@@ -4,7 +4,7 @@
 \name{rsdt-package}
 \alias{rsdt}
 \alias{rsdt-package}
-\title{rsdt: What the Package Does (One Line, Title Case)}
+\title{rsdt: Tidy interface to the UNHCR RSD/RST Statistical Reports}
 \description{
 Tidy interface to the UNHCR RSD/RST Statistical Reports.
 }

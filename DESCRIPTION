@@ -1,5 +1,5 @@
 Package: rsdt
-Title: What the Package Does (One Line, Title Case)
+Title: Tidy interface to the UNHCR RSD/RST Statistical Reports
 Version: 0.0.0.9000
 Authors@R: 
     c(person("Hisham", "Galal", , "galal@unhcr.org", role = c("aut", "cre")),
@@ -25,5 +25,5 @@ Imports:
     tibble,
     tidyr
 Depends: 
-    R (>= 2.10)
+    R (>= 4.0)
 LazyData: true
