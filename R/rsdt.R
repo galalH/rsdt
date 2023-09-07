@@ -5,7 +5,6 @@
 #' @importFrom purrr keep
 #' @importFrom lubridate year today
 #' @importFrom stringr str_replace
-#' @export
 rsdt <- function(platform, asylum, year, month) {
   base_year <- c(rsd = 2019, rsr = 2016)
   base_url <- c(rsd = "https://rsd.unhcr.org/location/{id}/{year-base_year['rsd']}",

@@ -59,7 +59,7 @@ rsr_demographics <- function(asylum, year, month) {
 #' @importFrom dplyr slice
 #' @importFrom tidyr pivot_longer
 #' @export
-rsr_processing_states <- function(asylum, year, month) {
+rsr_states <- function(asylum, year, month) {
   colnms <- c("origin", "dest", "priority", "category",
               "Pending decision_P", "Pending departure_P",
               "Withdrawn_C", "Withdrawn_P",
@@ -77,7 +77,7 @@ rsr_processing_states <- function(asylum, year, month) {
 #' @importFrom dplyr slice
 #' @importFrom tidyr pivot_longer
 #' @export
-rsr_internal_processing <- function(asylum, year, month) {
+rsr_internal <- function(asylum, year, month) {
   colnms <- c("origin",
               "Sent back_P",
               "Pending interview_C", "Pending interview_P",
@@ -96,21 +96,24 @@ rsr_internal_processing <- function(asylum, year, month) {
 
 #' @importFrom dplyr select bind_rows filter mutate
 #' @importFrom lubridate dmy
+#' @importFrom rlang set_names
 #' @export
-rsr_full_processing <- function(asylum, year, month) {
-  inds <- c(ind1 = "Processing time from submission to decision",
-            ind2 = "Processing time from submission to departure",
-            ind3 = "Processing time from case creation to submission")
+rsr_times <- function(asylum, year, month) {
+  from <- c(ind1 = "submission", ind2 = "submission", ind3 = "creation")
+  to <- c(ind1 = "decision", ind2 = "departure", ind3 = "submission")
+  colnms <- c("origin", "dest", "priority", "category",
+              "t1", "t2")
   data <- rsdt("rsr", asylum, year, month)[[7]]
   data[1, 1:6] <- data[1, 5:10]
   data[1, 7:10] <- ""
-  data <- data[, 1:10]
-  ind1 <- select(data, 1:4, t1 = 5, t2 = 6)
-  ind2 <- select(data, 1:4, t1 = 7, t2 = 8)
-  ind3 <- select(data, 1:4, t1 = 9, t2 = 10)
-  bind_rows(ind1 = ind1, ind2 = ind2, ind3 = ind3, .id = "ind") |>
-    filter(t1 != "") |>
-    mutate(ind = inds[ind], t1 = dmy(t1), t2 = dmy(t2)) |>
-    select(origin = Origin, dest = Destination, priority = Priority, category = Category,
-           ind, t1, t2)
+  bind_rows(ind1 = data[, c(1:4, 5:6)] |> set_names(colnms),
+            ind2 = data[, c(1:4, 7:8)] |> set_names(colnms),
+            ind3 = data[, c(1:4, 9:10)] |> set_names(colnms),
+            .id = "ind") |>
+    mutate(from = from[ind],
+           to = to[ind],
+           t1 = dmy(t1), t2 = dmy(t2),
+           .after = category) |>
+    filter(!is.na(t1)) |>
+    select(-ind)
 }

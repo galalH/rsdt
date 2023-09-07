@@ -1,4 +1,5 @@
 #' @importFrom purrr discard
+#' @importFrom stringr str_detect
 #' @export
 unhcr_login <- function() {
   cookiejar <- fs::path(fs::dir_create(rappdirs::app_dir("unhcr")$cache()), "cookies.rds")
